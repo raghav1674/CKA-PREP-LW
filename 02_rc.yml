@@ -1,0 +1,27 @@
+# REPLICATION CONTROLLER: Controller : Monitors and manages the container and maintain the desired state of the containers based on the labels.
+
+apiVersion: v1 # belongs to v1 version of api
+kind: ReplicationController # type of Resource
+metadata:  # information about the resource here RC.
+  name: my-rc
+  labels:
+    name: my-rc
+    env: dev
+    loc: IN
+spec: # specifications of the resource controller.
+  replicas: 4 # desire of number of pods at any moment of time.
+  selector: # labels based on which the monitoring will be done.
+    app: web
+    env: dev
+    loc: IN
+  template: # the template of the pod to launch if the desired state != current state
+    metadata:
+      name: my-pod
+      labels:
+        app: web
+        env: dev
+        loc: IN
+    spec: # specifications of the pod to be launched.
+      containers:
+      - name: my-con
+        image: httpd

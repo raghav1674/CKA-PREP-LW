@@ -1,0 +1,31 @@
+####################################################################################################################################   #                            SERVICE: LOADBALANCER: also work as Reverse Proxy.                                                    #   #                                                                                                                                   # 
+#####################################################################################################################################
+#Three  Types:                                                                                                                      #
+# - NodePort: means the client can access the app from the nodePort on which that pod is running , but there is two times NAT       #
+# BACKEND(POD OR TARGETPORT):SERVICE(PORT OR SERVICEPORT): NODEPORT(RANGE SHOULD BBE GREATOR THAN 30000)                            #
+#                                                                                                                                   #
+# - ClusterIP: Means the connection between the pods in the cluster outside world cannot connect to it directly.                    #
+#                                                                                                                                   #
+# - External: Means we can use the Other Cloud Providers LB Services like ELB in the AWS but we need to give some annotations in    #
+# that case.                                                                                                                        #  
+#####################################################################################################################################
+
+apiVersion: v1 # api version to use in which resource resides.
+kind: Service # kind of resource to create.
+metadata: # information about the resource
+  name: my-svc
+  labels:
+    name: my-svc
+    env: dev
+    loc: IN
+spec: # specifications of the resource.
+  selector: # based on the labels it will register that pod to itself and do load balancing.
+    app: web
+    env: dev
+    loc: IN
+  type: NodePort # type of SVC
+  ports: # information about ports (targetPort,NodePort, ServicePort)(BACKEND PORT)
+  - targetPort: 80 # as web server is running in that pod and is listening on Port 80
+    nodePort: 31000 # port of the node which is used by client ot access the service.
+    port: 8080  # the service port ie the loadbalancer port.(FRONTEND PORT)
+

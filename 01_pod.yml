@@ -1,0 +1,12 @@
+apiVersion: v1 # the api version to use.
+kind: Pod # the resource type we are going to create.
+metadata: # the information like labels and name of the resource.
+  name: my-pod
+  labels:
+    app: web
+    env: dev
+    loc: IN
+spec: # specifications of the resource.
+  containers: # containers as in one pod we can hve multiple containers.
+  - name: my-con
+    image: httpd:latest
