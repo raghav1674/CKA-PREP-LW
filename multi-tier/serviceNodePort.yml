@@ -1,0 +1,18 @@
+apiVersion: v1 # tha api in which the resource is present.
+kind: Service # the resource which we are gong to create
+metadata:
+  name: node-port-wp
+  labels:
+    app: wp-sql-svc
+    env: dev
+spec:
+  selector: # select the particular pods
+    env: dev
+    app: wp
+  type: NodePort # type of Service
+  ports:
+  - targetPort: 80    # the target port or backend port 
+    port: 80 # front-end port or  the service port 
+    nodePort: 31000            # the node port to use
+
+

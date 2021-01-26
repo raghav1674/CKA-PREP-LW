@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wp-pod
+  labels:
+    env: dev
+    app: wp
+spec:
+  containers:
+  - name: wp-con
+    image: wordpress:5.6.0-php7.4-apache
+

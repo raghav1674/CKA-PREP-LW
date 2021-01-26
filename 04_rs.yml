@@ -1,0 +1,42 @@
+apiVersion: apps/v1 # the version of api in which the resource is present
+kind: ReplicaSet # the kind of resource which we are going to create
+metadata:
+  name: rs-test
+  namespace: lw # the namespace in which the resource to be created
+  labels:
+    env: dev
+    loc: IN
+spec:
+  replicas: 3
+  selector:  # selector to match the labels associated with the pods in order to manage 
+    matchExpressions:
+    - key: app
+      operator: In
+      values: 
+      - web
+    - key: loc
+      operator: In
+      values:
+      - US
+  template: # the template to use to launch the other pods if the current < desire
+    metadata:
+      name: pod-test
+      namespace: lw
+      labels:  # labels should be same as the selectors
+        app: web
+        loc: US
+    spec: # specifications for the pod
+      containers:
+      - name: con-test
+        image: httpd
+        ports:
+        - containerPort: 80
+        volumeMounts:  # same as mount device mountPath
+        - name: vol-test
+          mountPath: /usr/local/apache2/htdocs/
+      volumes: # the volume which we can mount to the folder in this container.
+      - name: vol-test
+        emptyDir: {} # a way of creaing a temporary storage 
+
+
+
