@@ -1,7 +1,7 @@
 apiVersion: apps/v1 # the version of api in which the resource is present
 kind: ReplicaSet # the kind of resource which we are going to create
 metadata:
-  name: rs-test
+  name: rs-test-1
   namespace: lw # the namespace in which the resource to be created
   labels:
     env: dev
@@ -9,25 +9,28 @@ metadata:
 spec:
   replicas: 3
   selector:  # selector to match the labels associated with the pods in order to manage 
-    matchExpressions:
-    - key: app
-      operator: In
-      values: 
-      - web
-    - key: loc
-      operator: In
-      values:
-      - US
+    matchLabels:
+      app: web
+      loc: US
+#    matchExpressions:
+ #   - key: app
+  #    operator: In
+ #     values: 
+ #     - web
+ #   - key: loc
+ #     operator: In
+ #     values:
+  #    - US
   template: # the template to use to launch the other pods if the current < desire
     metadata:
-      name: pod-test
+      name: pod-test-1
       namespace: lw
       labels:  # labels should be same as the selectors
         app: web
         loc: US
     spec: # specifications for the pod
       containers:
-      - name: con-test
+      - name: con-test-1
         image: httpd
         ports:
         - containerPort: 80

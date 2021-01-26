@@ -1,0 +1,22 @@
+apiVersion: v1 # the api in which the resource is present
+kind: Pod # the kind of resource
+metadata: # the info about the resource
+  name: pod-with-toleration
+  labels:
+    env: dev
+    tolerate: serverd
+    
+spec: # specifications of the resource
+  tolerations:  # adding the toleration so that it can tolerate the taint set on the nodes
+  - key: example-key  # this is the taint key set 
+    operator: Exists # if it's exists
+  containers: # the containers information
+  - name: con-with-tolerations
+    image: httpd
+
+
+
+
+
+  
+
