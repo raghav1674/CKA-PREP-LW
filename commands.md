@@ -18,14 +18,15 @@
 	> kubectl delete pod --all
         
 	
-
-
-
-
-
-
 ### TO CREATE A RESOURCE FROM THE YAML FILE:
 > kubectl create|apply  -f FILENAME.(yml|yaml)
 
 
-	
+### PV has three types of RECLAIM POLICY:
+   -------------------------------------
+	1. RECYCLE:
+	   	>if pvc is deleted then pv is released and the data from actual storage is deleted to be used with another pvc.
+	2. RETAIN: 
+	   	>if pvc is deleted then pv is released but not available to be used any other pvc as the storage is still persistent in the device.
+	3. DELETE: 
+ 	   	>if pvc is deleted the pv will automatically released and then deleted.	
