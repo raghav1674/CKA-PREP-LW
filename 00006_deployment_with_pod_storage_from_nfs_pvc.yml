@@ -1,0 +1,54 @@
+apiVersion: apps/v1  #the api version in which the reosurce is present.
+kind: Deployment # the kind of resources
+metadata:
+  name: my-deploy
+  namespace: lw
+  labels:
+    app: web
+    storageType: nfs
+spec: # the specification for the resource (Deployment)
+  selector:  # the selector through which it monitors the replicaset and replicaset monitors pod
+    matchExpressions:
+    - key: app 
+      operator: In 
+      values: 
+      - "web"
+
+    - { key: env ,operator: In, values: ["dev","test"] }
+
+  replicas: 2  # the number of replicas
+  strategy:
+    type: RollingUpdate      # the deployment strategy to use
+    rollingUpdate:
+      maxSurge: 1 # max number of extra pod to be avialable at time of updates
+  template: # the template for the pod
+    metadata:
+      name: my-pod
+      labels:  # the labels should be same as the selectors
+        app: web 
+        env: dev
+    spec: # the specifications of the Pod
+      volumes: # the volume which we can mount to containers
+      - name: my-nfs-vol
+        persistentVolumeClaim:  # we need to tell the pvc name
+          claimName: my-nfs-pvc
+      - name: my-vol  # another pvc
+        persistentVolumeClaim:
+          claimName: my-pvc
+      containers: # now the specifications of the containers
+      - name: my-con
+        image: httpd
+        volumeMounts:  # similar to mount dev mountPath
+        - name: my-nfs-vol        # the name of the volume 
+          mountPath: /usr/local/apache2/htdocs/  # the mount folder
+      - name: my-con-2
+        image: busybox  # as this container do not have any service running we need to run some command to keep it running 
+        command:
+        - "sleep"
+        - "3600"
+        volumeMounts: 
+        - name: my-vol
+          mountPath: /root/
+           
+
+

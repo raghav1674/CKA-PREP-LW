@@ -1,0 +1,15 @@
+apiVersion: v1 # the version of api
+kind: PersistentVolume
+metadata:
+  namespace: lw
+  name: my-nfs-pv
+  labels:
+    app: web
+spec:
+  accessModes: # accessMode
+  - ReadWriteMany
+  capacity: # the capacity of the storage
+    storage: 1Gi
+  nfs:  # from where to get the storage
+    path: /nfs_dir/
+    server: 192.168.99.109

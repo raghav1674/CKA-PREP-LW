@@ -1,0 +1,13 @@
+apiVersion: v1 # the api version in hwihc the resource is present
+kind: PersistentVolumeClaim # kind of resource 
+metadata: 
+  name: my-nfs-pvc
+  namespace: lw
+  labels:
+    app: web
+spec: #specification of the pvc
+  accessModes: # the access mode of storage we want
+  - ReadWriteMany
+  resources: # request for resource 
+    requests:
+      storage: 1Gi
