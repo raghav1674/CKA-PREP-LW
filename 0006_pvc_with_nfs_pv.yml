@@ -6,6 +6,7 @@ metadata:
   labels:
     app: web
 spec: #specification of the pvc
+  storageClassName: "" # "" means no storageClass ie static pv.
   accessModes: # the access mode of storage we want
   - ReadWriteMany
   resources: # request for resource 
