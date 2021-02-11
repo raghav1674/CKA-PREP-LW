@@ -1,0 +1,26 @@
+---
+apiVersion: v1 # the version of api in which the resource is present 
+kind: Config
+metadata: 
+  namespace: tech
+  serverloc: local 
+clusters:  # the list of clusters
+- cluster: # info of cluster like ca.crt and the url 
+    server: https://192.168.99.112:6443    # url
+    certificate-authority: /etc/kubernetes/pki/ca.crt       # the ca.crt which signed the csr
+  name: localCluster
+users: # users of the cluster 
+- user: # user info like their key and certificate 
+    client-key: secure/raghav.key
+    client-certificate: secure/raghav.crt 
+  name: raghav
+contexts: # the context is user:cluster  
+- context:  # for localCluster raghav user 
+    cluster: localCluster
+    user: raghav
+  name: raghav@localCluster 
+
+current-context: raghav@localCluster
+...
+
+

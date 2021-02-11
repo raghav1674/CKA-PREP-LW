@@ -1,0 +1,15 @@
+## command: kubectl create role name --verbs=list,get,delete,..    --resources=Resource like deployments 
+
+apiVersion: rbac.authorization.k8s.io/v1 # the api Version in which the resource is present 
+kind: Role
+metadata:
+  namespace: tech
+  name: podsread
+rules: # define the rules 
+- apiGroups: # the apiVersions 
+  - "v1"
+  resources: # the resources this role can access 
+  - "pod"
+  verbs: # action which can be performed 
+  - "get"
+

@@ -1,0 +1,19 @@
+## cmd: kubectl create rolebinding name --role=name --user=username
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding # bind the role with the user 
+metadata:
+  namespace: tech 
+  name: podReaderlocalClusterBind 
+  # the subject will refer to the User the role is applied to
+subjects:
+- kind: User # the kind of resource
+  name: raghav  # name of the user
+  apiGroup: rbac.authorization.k8s.io
+ 
+
+
+roleRef: # the reference to the role 
+  kind: Role # the kind of resource being referenced 
+  name: podsread   # this field shoudl match the name of the role 
+  apiGroup: rbac.authorization.k8s.io

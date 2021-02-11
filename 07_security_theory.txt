@@ -1,0 +1,31 @@
+Kubernetes support certificate based authentication.
+and role based access control
+
+In order to do some action in kubernetes cluster one need to identify to the apiserver.
+Steps to be followed:
+
+1. Create a private key.
+
+> openssl genrsa -out filename.key 
+''' it will generate a private key using rsa algorithm '''
+
+2. Create a certificate using this key.
+
+> openssl req -new -key filename.key -out filename.csr ( Certificate Signing Request)
+''' it will create a certificate from the key generated in first step and store it in encoded format in filename.csr '''
+
+3. Copy this csr in the master node.
+
+4. In master node, we need to sign this certificate and create the filename.crt file.
+
+> openssl x509 -req -in filename.csr -CA ca.crt -CAkey ca.key -CAcreateserial -out filename.crt 
+''' it will sign the csr with the ca and ca key and create srl and the important file which is the signed certificate crt(Chinese Remainder Theorem)'''
+
+5. Copy this filename.crt to the workstation or client system.
+
+6. Create the config file example file: 08_config.yml
+
+then use the context 
+
+> kubectl config use-context ContextName --kubeconfig configFile.yml
+
