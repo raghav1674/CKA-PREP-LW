@@ -1,0 +1,26 @@
+# kubectl taint nodes nodename  mykey=value:Taint_Effect  
+# taints are applied to the nodes and the pods with those corresponsding taints can only run on that nodes.
+# three types of taints are:
+#   -  NoSchedule : means only schedule those node which has the toleration for this taint else no pod
+#   -  NoExecute : means no pod to schedule further and the current running pods will be terminated and if there are other nodes in cluster the pods will be migrated to that node.
+#   - PreferNoSchedule: it is safe version of NoSchedule ie prefer not to schedule but if there is not other node with such requirements labels metrics then can schedule on this node even after having no toleration.
+#
+# to remove the toleration :  kubectl taint nodes nodename mykey:Taint_Effect--     
+
+apiVersion: v1
+kind: Pod # the resource we are going to create
+metadata:
+  name: tolerate-appweb
+  labels:
+    app: web
+spec: # specification of the pod
+  containers:
+  - name: tolerate-web
+    image: busybox
+    command:
+    - "sleep 3000"
+  tolerations:
+  - key: myapp
+    operator: "Equal"
+    value: myweb
+    effect: NoSchedule 

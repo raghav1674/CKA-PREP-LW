@@ -1,0 +1,14 @@
+# some resources are not namespaced they are cluster wise created.
+apiVersion: rbac.authorization.k8s.io/v1  # the api version in which this resource is present
+kind: ClusterRole
+metadata:
+  name: "storage-class-manage"
+rules:
+- resources:
+  - 'storageclass'
+  apiGroups:
+  - '*'
+  verbs:
+  - '*'
+
+

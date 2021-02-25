@@ -1,0 +1,13 @@
+# we need to create the binding to bind a cluster role to a user.
+apiVersion: rbac.authorization.k8s.io/v1 # the apiversion in which the resource is present
+kind: ClusterRoleBinding  # the kind of resource we are going to create
+metadata:
+  name: "storage-class-rolebind"
+subjects: # the user to attach the role
+- apiGroup: rbac.authorization.k8s.io
+  kind: User
+  name: serverb.lab.example.com       # the user name  
+roleRef: # which role to bind
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: storage-class-manage

@@ -1,0 +1,19 @@
+# we can first label the node and then launch the pods on that node.
+# kubectl label node nodename key=value
+#
+apiVersion: v1 # the api version in which the resource is present
+kind: Pod # resource we are going to create
+metadata:
+  name: web-pod
+  labels:
+    app: web
+spec: # specifications of the pod
+  nodeSelector:
+    app: web  # launch on the node which has this label 
+  containers:
+  - name: "web"
+    image: httpd
+    ports:
+    - containerPort: 80
+   
+
